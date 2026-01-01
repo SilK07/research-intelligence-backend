@@ -27,3 +27,23 @@ def create_document(title: str, content:str, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(doc)
     return doc 
+
+@app.get("/documents")
+def get_documents(db: Session = Depends(get_db)):
+    docs = db.query(models.documents).all()
+    return docs
+
+@app.get("/documents/{doc_id}")
+def get_documents(doc_id: int, db: Session = Depends(get_db)):
+    doc = db.query(models.documents).filter(models.documents.id == doc_id).first()
+    return doc
+
+@app.delete("/delete_document/{doc_id}")
+def delete_document(doc_id: int, db: Session = Depends(get_db)):
+    doc = db.query(models.documents).filter(models.documents.id == doc_id).first()
+    if doc is None:
+        return {"error": "Document not found"}
+    
+    db.delete(doc)
+    db.commit()
+    return {"message": "Document deleted"}
