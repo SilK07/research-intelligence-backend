@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, PrimaryKeyConstraint
+from sqlalchemy import Column, Integer, String, PrimaryKeyConstraint, JSON, ForeignKey
 from db.base import Base
 
 class documents(Base):
@@ -7,3 +7,4 @@ class documents(Base):
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String, nullable=False)
     content = Column(String, nullable=False)
+    embedding = Column(JSON, nullable=True)
