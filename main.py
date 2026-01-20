@@ -75,7 +75,7 @@ def upload_document(title: str, file: UploadFile = File(...), db: Session = Depe
 
     return {"id": document.id, "title": document.title, "pages": len(reader.pages)}
 
-@app.get("/search")
+@app.get("/similarity_search")
 def search_documents(query: str, db: Session = Depends(get_db)):
     query_embedding = get_embedding(query)
 
